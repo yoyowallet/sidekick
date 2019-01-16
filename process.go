@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"os"
 	"os/exec"
 )
@@ -10,16 +11,25 @@ type Process struct {
 }
 
 func NewProcess(name string, arg ...string) *Process {
-	proc := new(Process)
-	proc.Cmd = exec.Command(name, arg...)
+	p := new(Process)
+	p.Cmd = exec.Command(name, arg...)
 
 	// Defaults
-	proc.Env = os.Environ()
-	proc.Stdin = os.Stdin
-	proc.Stdout = os.Stdout
-	proc.Stderr = os.Stderr
+	p.Env = os.Environ()
+	p.Stdin = os.Stdin
+	p.Stdout = os.Stdout
+	p.Stderr = os.Stderr
 
-	return proc
+	return p
+}
+
+func (p *Process) AppendEnvFromSource(src ConfigSource) error {
+	items, err := src.List(context.Background())
+	if err != nil {
+		return err
+	}
+	p.Env = append(p.Env, items...)
+	return nil
 }
 
 func (p *Process) Start() error {

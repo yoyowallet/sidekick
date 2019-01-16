@@ -1,6 +1,8 @@
 package main
 
-import "github.com/urfave/cli"
+import (
+	"github.com/urfave/cli"
+)
 
 var commandEnv = cli.Command{
 	Name: "env",
@@ -8,6 +10,7 @@ var commandEnv = cli.Command{
 		var err error
 
 		proc := NewProcess("env")
+		proc.AppendEnvFromSource(c.App.Metadata[metadataConfigSource].(ConfigSource))
 
 		err = proc.Start()
 		if err != nil {

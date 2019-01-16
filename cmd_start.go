@@ -32,10 +32,7 @@ var commandStart = cli.Command{
 		}
 
 		proc := NewProcess(command[0], command[1:]...)
-		err = proc.AppendEnvFromSource(c.App.Metadata[metadataConfigSource].(ConfigSource))
-		if err != nil {
-			return err
-		}
+		proc.AppendEnvSource(c.App.Metadata[metadataConfigSource].(ConfigSource))
 
 		err = proc.Start()
 		if err != nil {

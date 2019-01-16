@@ -10,7 +10,8 @@ import (
 func main() {
 	app := cli.NewApp()
 	app.Commands = []cli.Command{
-		startCommand,
+		commandStart,
+		commandEnv,
 	}
 	err := app.Run(os.Args)
 	if err != nil {

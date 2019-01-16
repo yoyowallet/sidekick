@@ -6,7 +6,7 @@ import (
 	"github.com/urfave/cli"
 )
 
-var startCommand = cli.Command{
+var commandStart = cli.Command{
 	Name: "start",
 	Flags: []cli.Flag{
 		cli.StringFlag{

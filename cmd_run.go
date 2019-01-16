@@ -1,15 +1,17 @@
 package main
 
-import (
-	"github.com/urfave/cli"
-)
+import "github.com/urfave/cli"
 
-var commandEnv = cli.Command{
-	Name: "env",
+var commandRun = cli.Command{
+	Name: "run",
 	Action: func(c *cli.Context) error {
 		var err error
 
-		proc := NewProcess("env")
+		if c.NArg() == 0 {
+			return cli.NewExitError("missing command to run", 1)
+		}
+
+		proc := NewProcess(c.Args().First(), c.Args().Tail()...)
 		err = proc.AppendEnvFromSource(c.App.Metadata[metadataConfigSource].(ConfigSource))
 		if err != nil {
 			return err

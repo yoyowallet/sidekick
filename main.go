@@ -39,8 +39,9 @@ func main() {
 		return nil
 	}
 	app.Commands = []cli.Command{
-		commandStart,
 		commandEnv,
+		commandRun,
+		commandStart,
 	}
 	err := app.Run(os.Args)
 	if err != nil {

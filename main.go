@@ -7,8 +7,6 @@ import (
 	"github.com/urfave/cli"
 )
 
-const metadataConfigSource = "configSource"
-
 func main() {
 	app := cli.NewApp()
 	app.Flags = []cli.Flag{
@@ -34,7 +32,7 @@ func main() {
 			return cli.NewExitError("couldn't find that config source type", 2)
 		}
 
-		c.App.Metadata[metadataConfigSource] = configSource
+		setConfigSource(c, configSource)
 
 		return nil
 	}

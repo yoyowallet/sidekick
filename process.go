@@ -23,7 +23,7 @@ func NewProcess(name string, arg ...string) *Process {
 	return p
 }
 
-func (p *Process) AppendEnvSource(src ConfigSource) {
+func (p *Process) AppendConfigSource(src ConfigSource) {
 	p.configSources = append(p.configSources, src)
 }
 

@@ -12,12 +12,16 @@ type ConfigSource interface {
 
 const metadataConfigSourceKey = "configSource"
 
-func setConfigSource(c *cli.Context, src ConfigSource) {
-	c.App.Metadata[metadataConfigSourceKey] = src
+func appendConfigSource(c *cli.Context, src ConfigSource) {
+	m, ok := c.App.Metadata[metadataConfigSourceKey].([]ConfigSource)
+	if !ok {
+		m = []ConfigSource{}
+	}
+	c.App.Metadata[metadataConfigSourceKey] = append(m, src)
 }
 
-func configSourceFromContext(c *cli.Context) ConfigSource {
-	if src, ok := c.App.Metadata[metadataConfigSourceKey].(ConfigSource); ok {
+func configSourcesFromContext(c *cli.Context) []ConfigSource {
+	if src, ok := c.App.Metadata[metadataConfigSourceKey].([]ConfigSource); ok {
 		return src
 	}
 	return nil

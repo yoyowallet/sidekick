@@ -19,8 +19,13 @@ func main() {
 			Name:   "config-table",
 			EnvVar: "SIDEKICK_CONFIG_TABLE",
 		},
+		cli.StringSliceFlag{
+			Name:  "env, e",
+			Usage: "set environment variables",
+		},
 	}
 	app.Before = func(c *cli.Context) error {
+		// TODO: support multiple config sources
 		var configSource ConfigSource
 		switch c.String("config-source") {
 		case "dynamodb":
@@ -32,7 +37,12 @@ func main() {
 			return cli.NewExitError("couldn't find that config source type", 2)
 		}
 
-		setConfigSource(c, configSource)
+		appendConfigSource(c, configSource)
+
+		envs := c.StringSlice("env")
+		if len(envs) > 0 {
+			appendConfigSource(c, NewStringSliceConfigSource(envs))
+		}
 
 		return nil
 	}

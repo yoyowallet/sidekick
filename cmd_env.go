@@ -10,7 +10,7 @@ var commandEnv = cli.Command{
 		var err error
 
 		proc := NewProcess("env")
-		proc.AppendConfigSource(configSourceFromContext(c))
+		proc.AppendConfigSource(configSourcesFromContext(c)...)
 
 		err = proc.Start()
 		if err != nil {

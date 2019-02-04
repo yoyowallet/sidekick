@@ -23,8 +23,8 @@ func NewProcess(name string, arg ...string) *Process {
 	return p
 }
 
-func (p *Process) AppendConfigSource(src ConfigSource) {
-	p.configSources = append(p.configSources, src)
+func (p *Process) AppendConfigSource(sources ...ConfigSource) {
+	p.configSources = append(p.configSources, sources...)
 }
 
 func (p *Process) resetAndInstallEnv() error {

@@ -32,7 +32,7 @@ var commandStart = cli.Command{
 		}
 
 		proc := NewProcess(command[0], command[1:]...)
-		proc.AppendConfigSource(configSourceFromContext(c))
+		proc.AppendConfigSource(configSourcesFromContext(c)...)
 
 		err = proc.Start()
 		if err != nil {

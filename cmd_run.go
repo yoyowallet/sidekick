@@ -12,7 +12,7 @@ var commandRun = cli.Command{
 		}
 
 		proc := NewProcess(c.Args().First(), c.Args().Tail()...)
-		proc.AppendConfigSource(configSourceFromContext(c))
+		proc.AppendConfigSource(configSourcesFromContext(c)...)
 
 		err = proc.Start()
 		if err != nil {

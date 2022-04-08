@@ -16,6 +16,11 @@ func main() {
 			Value:  "dynamodb",
 		},
 		cli.StringFlag{
+			Name:   "config-key",
+			EnvVar: "SIDEKICK_CONFIG_KEY",
+			Value:  "common",
+		},
+		cli.StringFlag{
 			Name:   "config-table",
 			EnvVar: "SIDEKICK_CONFIG_TABLE",
 		},
@@ -31,7 +36,7 @@ func main() {
 		case "dynamodb":
 			configSource = &DynamoDBConfigSource{
 				Table: c.String("config-table"),
-				Key:   "common", // TODO: parameterise
+				Key:   c.String("config-key"),
 			}
 		default:
 			return cli.NewExitError("couldn't find that config source type", 2)
